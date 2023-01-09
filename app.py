@@ -7,6 +7,10 @@ data = [{'title': "Gestão de empresas", 'created':'21/02/2023'},
 {'title': "Inglês Corporativo", 'created':'21/02/2023'},
 {'title': "Análise de Dados", 'created':'21/02/2023'}]
 
+def curso(id, nome, descricao, id_taxonomia, id2, area):
+    return {'id': id, 'nome':nome, 'descricao':descricao, 'area': area}
+
+
 def get_db_connection():
     conn = psycopg2.connect(user="postgres",
                                   password="pg12345",
@@ -17,19 +21,18 @@ def get_db_connection():
 
 @app.route('/')
 def index():
-    conn = psycopg2.connect(user="postgres",
-                                  password="pg12345",
-                                  host="127.0.0.1",
-                                  port="5432",
-                                  database="sample-db")
+    conn = get_db_connection()
     cursor = conn.cursor()
 
-    cursor.execute("DROP TABLE IF EXISTS posts;CREATE TABLE posts (id INTEGER PRIMARY KEY,created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,title TEXT NOT NULL,content TEXT NOT NULL);")
-    cursor.execute("SELECT version();")
-    # Fetch result
-    record = cursor.fetchone()
-    print("You are connected to - ", record, "\n")
-    cursor.close()
+    cursor.execute("SELECT * from ensino.curso c JOIN ensino.taxonomia t ON c.id_taxonomia = t.id;")
+    records = cursor.fetchall()
+    records_dict = [curso(*r) for r in records]
+    conn.close()
     conn.close()
 
-    return render_template('index.html', data=data)
+    return render_template('index.html', data=records_dict)
+
+
+@app.route('/test')
+def test():
+    return "test"

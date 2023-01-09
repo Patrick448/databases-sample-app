@@ -29,9 +29,10 @@
         {% block content %} {% endblock %}
         {% for d in data %}
           <a href="#">
-              <h3>{{ d['title'] }}</h2>
+              <h3>{{ d['nome'] }}</h2>
           </a>
-          <span class="badge badge-primary">{{ d['created'] }}</span>
+          <span class="badge badge-primary">{{ d['area'] }}</span>
+          <span class="text" >{{ d['descricao'] }}</span>
           <hr>
       {% endfor %}
     </div>
