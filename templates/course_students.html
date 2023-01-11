@@ -20,18 +20,19 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
             <li class="nav-item active">
-                <!--a class="nav-link" href="#">About</a-->
+                 <!--a class="nav-link" href="#">About</a-->
             </li>
             </ul>
         </div>
     </nav>
     <div class="container">
+        {% block content %} {% endblock %}
         {% for d in data %}
-          <a  href="/course-students/{{d['id']}}">
-              <h3>{{ d['nome'] }}</h2>
+          <a href="#">
+              <h4>{{ d['nome'] }}</h2>
           </a>
-          <span class="badge badge-primary">{{ d['area'] }}</span>
-          <span class="text" >{{ d['descricao'] }}</span>
+          <span class="badge badge-primary"></span>
+          <span class="text" >{{ d['end_cidade'] }}  | {{ d['end_uf'] }} | {{ d['data_matricula'] }}</span>
           <hr>
       {% endfor %}
     </div>
